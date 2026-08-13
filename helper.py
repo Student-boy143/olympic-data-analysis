@@ -51,3 +51,16 @@ def country_year_list(df):
   country.insert(0, 'Overall')
 
   return years,country
+
+def data_over_time(df, col):
+    nations_over_time = (
+        df.drop_duplicates(['Year', col])
+        .groupby('Year')
+        .size()
+        .reset_index(name=col)
+        .sort_values('Year')
+    )
+
+    nations_over_time.rename(columns={'Year': 'Edition'}, inplace=True)
+
+    return nations_over_time
